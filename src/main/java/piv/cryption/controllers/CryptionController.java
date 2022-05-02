@@ -1,25 +1,23 @@
 package piv.cryption.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import piv.cryption.models.CryptoDto;
 import piv.cryption.services.CryptoManager;
 
 @RestController
 public class CryptionController {
-    @Autowired
-    CryptoManager cryptoManager;
 
+    @Autowired
+    private CryptoManager cryptoManager;
+
+    //http://localhost:8080/crypto?action=empty&string=empty&cryptName=0&context=empty
     @GetMapping("/crypto")
-    public CryptoDto crypto(@RequestParam(value = "action", required = false, defaultValue = "empty") String action,
-                            @RequestParam(value = "string", required = false, defaultValue = "empty") String string,
-                            @RequestParam(value = "cryptName", required = false, defaultValue = "0") String cryptName,
-                            @RequestParam(value = "context", required = false, defaultValue = "empty") String context){
-        CryptoDto cryptoDto = new CryptoDto(action, string, cryptName, context);
-        cryptoManager.Encryption(cryptoDto);
+
+    @ResponseBody
+    public CryptoDto crypto(CryptoDto cryptoDto){
+        cryptoManager.Action(cryptoDto);
         return cryptoDto;
     }
 

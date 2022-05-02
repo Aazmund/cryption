@@ -1,9 +1,6 @@
 package piv.cryption.models;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-
-import java.io.Serializable;
 
 public class CryptoDto
 {
@@ -11,14 +8,7 @@ public class CryptoDto
     private String string;
     private String cryptName;
     private String context;
-    private String encryptString;
-
-    public CryptoDto(String action, String string, String cryptName, String context) {
-        this.action = action;
-        this.string = string;
-        this.cryptName = cryptName;
-        this.context = context;
-    }
+    private String result;
 
     public String getAction() {
         return action;
@@ -52,11 +42,11 @@ public class CryptoDto
         this.context = context;
     }
 
-    public String getEncryptString() {
-        return encryptString;
+    public String getResult() {
+        return result;
     }
 
-    public void setEncryptString(String encryptString) {
-        this.encryptString = encryptString;
+    public void setResult(String result) {
+        this.result = result;
     }
 }
