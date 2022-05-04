@@ -22,21 +22,27 @@ public class CryptoManager {
     @Autowired
     private Vigenere vigenere;
 
-    public void Action(CryptoDto cryptoDto){
+    public void action(CryptoDto cryptoDto){
         switch (cryptoDto.getAction()){
-            case "Decrypt": Decrypt(cryptoDto); break;
-            case "Encrypt": Encrypt(cryptoDto); break;
+            case "Decrypt": decrypt(cryptoDto); break;
+            case "Encrypt": encrypt(cryptoDto); break;
         }
     }
-    private void Decrypt(CryptoDto cryptoDto){
+    private void decrypt(CryptoDto cryptoDto){
         switch (cryptoDto.getCryptName()){
             case "Caesar": caesar.decrypt(cryptoDto); break;
+            case "Affine": affine.decrypt(cryptoDto); break;
+            case "SinglePermutationKey": singlePermutationKey.decrypt(cryptoDto); break;
+
         }
     }
 
-    private void Encrypt(CryptoDto cryptoDto){
+    private void encrypt(CryptoDto cryptoDto){
         switch (cryptoDto.getCryptName()){
             case "Caesar": caesar.encrypt(cryptoDto); break;
+            case "Affine": affine.encrypt(cryptoDto); break;
+            case "SinglePermutationKey": singlePermutationKey.encrypt(cryptoDto); break;
+
         }
     }
 

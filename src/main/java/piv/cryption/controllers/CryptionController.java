@@ -17,7 +17,7 @@ public class CryptionController {
 
     @ResponseBody
     public CryptoDto crypto(CryptoDto cryptoDto){
-        cryptoManager.Action(cryptoDto);
+        cryptoManager.action(cryptoDto);
         return cryptoDto;
     }
 
