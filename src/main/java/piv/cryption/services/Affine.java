@@ -15,18 +15,15 @@ public class Affine {
         int keyA = Integer.parseInt(key[0]);
         int keyB = Integer.parseInt(key[1]);
         StringBuilder result = new StringBuilder();
+        int index, indexOf;
         for (int i = 0; i < text.length(); i++) {
-            for (int j = 0; j < alphabet.length(); j++) {
-                if (text.charAt(i) == ' ') {
+                if (text.charAt(i) == ' ')
                     result.append(" ");
-                    break;
-                }
-                else if (text.charAt(i) == alphabet.charAt(j)){
-                    int index = (keyB+keyA*(j))%alphabet.length();
+                else {
+                    indexOf = alphabet.indexOf(text.charAt(i));
+                    index = (keyB+keyA*(indexOf))%alphabet.length();
                 result.append(alphabet.charAt(index));
-                break;
                 }
-            }
         }
         cryptoDto.setResult(result.toString());
     }
@@ -38,25 +35,22 @@ public class Affine {
         int keyB = Integer.parseInt(key[1]);
         StringBuilder result = new StringBuilder();
         int multi = 0;
+        int index, indexOf;
         for (int i = 0; i < alphabet.length(); i++) {
             if ((keyA*i)%alphabet.length()==1) {
                 multi = i;
             }
         }
         for (int i = 0; i < text.length(); i++) {
-            for (int j = 0; j < alphabet.length(); j++) {
-                if (text.charAt(i) == ' ') {
+                if (text.charAt(i) == ' ')
                     result.append(" ");
-                    break;
-                }
-                else if (text.charAt(i) == alphabet.charAt(j)){
-                    int index = ((j-keyB)*multi)%alphabet.length();
+                else {
+                    indexOf = alphabet.indexOf(text.charAt(i));
+                    index = ((indexOf-keyB)*multi)%alphabet.length();
                     if (index < 0)
                         index+=alphabet.length();
                     result.append(alphabet.charAt(index));
-                    break;
                 }
-            }
         }
         cryptoDto.setResult(result.toString());
     }

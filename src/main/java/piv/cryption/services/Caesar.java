@@ -5,40 +5,19 @@ import piv.cryption.models.CryptoDto;
 
 @Service
 public class Caesar {
-    private static final String capitalLetterRus = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
-    private static final String smallLetterRus = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
-    private static final String capitalLetterEng = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final String smallLetterEng = "abcdefghijklmnopqrstuvwxyz";
+    private static final String alphabet =
+            "абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                    ", ";
 
     public void encrypt(CryptoDto cryptoDto){
         String str = cryptoDto.getString();
         int key = Integer.parseInt(cryptoDto.getContext());
         StringBuilder result = new StringBuilder();
-        if(smallLetterRus.indexOf(cryptoDto.getString().charAt(0)) != -1){
-            for(int i = 0; i < str.length(); i++){
-                if(smallLetterRus.indexOf(str.charAt(i)) == -1){
-                    result.append(str.charAt(i));
-                }else{
-                    if(smallLetterRus.indexOf(str.charAt(i)) + key < smallLetterRus.length()){
-                        result.append(smallLetterRus.charAt(smallLetterRus.indexOf(str.charAt(i)) + key));
-                    }else{
-                        result.append(smallLetterRus.charAt(smallLetterRus.indexOf(str.charAt(i)) + key - smallLetterRus.length()));
-                    }
-                }
-            }
-
-        }else{
-            for(int i = 0; i < str.length(); i++){
-                if(smallLetterEng.indexOf(str.charAt(i)) == -1){
-                    result.append(str.charAt(i));
-                }else{
-                    if(smallLetterEng.indexOf(str.charAt(i)) + key < smallLetterEng.length()){
-                        result.append(smallLetterEng.charAt(smallLetterEng.indexOf(str.charAt(i)) + key));
-                    }else{
-                        result.append(smallLetterEng.charAt(smallLetterEng.indexOf(str.charAt(i)) + key - smallLetterEng.length()));
-                    }
-                }
-            }
+        int indexOf;
+        for(int i = 0; i < str.length(); i++) {
+            indexOf = alphabet.indexOf(str.charAt(i));
+            result.append(alphabet.charAt(indexOf + key));
         }
         cryptoDto.setResult(result.toString());
     }
@@ -47,31 +26,14 @@ public class Caesar {
         String str = cryptoDto.getString();
         int key = Integer.parseInt(cryptoDto.getContext());
         StringBuilder result = new StringBuilder();
-        if(smallLetterRus.indexOf(cryptoDto.getString().charAt(0)) != -1){
-            for(int i = 0; i < str.length(); i++){
-                if(smallLetterRus.indexOf(str.charAt(i)) == -1){
-                    result.append(str.charAt(i));
-                }else{
-                    if(smallLetterRus.indexOf(str.charAt(i)) - key >= 0){
-                        result.append(smallLetterRus.charAt(smallLetterRus.indexOf(str.charAt(i)) - key));
-                    }else{
-                        result.append(smallLetterRus.charAt( smallLetterRus.length() + (smallLetterRus.indexOf(str.charAt(i)) - key)));
-                    }
-                }
+        int indexOf;
+        for(int i = 0; i < str.length(); i++){
+            indexOf = alphabet.indexOf(str.charAt(i));
+            if(indexOf - key >= 0){
+                result.append(alphabet.charAt(indexOf - key));
+            }else{
+                result.append(alphabet.charAt(indexOf - key) + alphabet.length());
             }
-        }else{
-            for(int i = 0; i < str.length(); i++){
-                if(smallLetterEng.indexOf(str.charAt(i)) == -1){
-                    result.append(str.charAt(i));
-                }else{
-                    if(smallLetterEng.indexOf(str.charAt(i)) - key >= 0){
-                        result.append(smallLetterEng.charAt(smallLetterEng.indexOf(str.charAt(i)) - key));
-                    }else{
-                        result.append(smallLetterEng.charAt( smallLetterEng.length() + (smallLetterEng.indexOf(str.charAt(i)) - key)));
-                    }
-                }
-            }
-
         }
         cryptoDto.setResult(result.toString());
     }

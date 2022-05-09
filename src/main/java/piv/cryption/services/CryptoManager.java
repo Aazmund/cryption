@@ -14,11 +14,13 @@ public class CryptoManager {
     @Autowired
     private Affine affine;
     @Autowired
+    private MagicSquare magicSquare;
+    @Autowired
+    private Trithemius trithemius;
+    @Autowired
     private CaesarKeyWord caesarKeyWord;
     @Autowired
     private DoublePermutation doublePermutation;
-    @Autowired
-    private Trithemius trithemius;
     @Autowired
     private Vigenere vigenere;
 
@@ -26,6 +28,7 @@ public class CryptoManager {
         switch (cryptoDto.getAction()){
             case "Decrypt": decrypt(cryptoDto); break;
             case "Encrypt": encrypt(cryptoDto); break;
+            case "MagicSquare": magicSquare.action(cryptoDto); break;
         }
     }
     private void decrypt(CryptoDto cryptoDto){
@@ -33,7 +36,8 @@ public class CryptoManager {
             case "Caesar": caesar.decrypt(cryptoDto); break;
             case "Affine": affine.decrypt(cryptoDto); break;
             case "SinglePermutationKey": singlePermutationKey.decrypt(cryptoDto); break;
-
+            case "Trithemius": trithemius.decrypt(cryptoDto); break;
+            case "Vigenere": vigenere.decrypt(cryptoDto); break;
         }
     }
 
@@ -42,7 +46,8 @@ public class CryptoManager {
             case "Caesar": caesar.encrypt(cryptoDto); break;
             case "Affine": affine.encrypt(cryptoDto); break;
             case "SinglePermutationKey": singlePermutationKey.encrypt(cryptoDto); break;
-
+            case "Trithemius": trithemius.encrypt(cryptoDto); break;
+            case "Vigenere": vigenere.encrypt(cryptoDto); break;
         }
     }
 
