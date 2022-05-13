@@ -9,14 +9,22 @@ public class Vigenere {
             "абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    private String generateKey(String str, String key)
+    private String generateKey(String text, String keyWord)
     {
-        for (int i = 0; key.length() < str.length(); i++)
-        {
-            key+=(key.charAt(i));
+        StringBuilder key = new StringBuilder();
+        int counter = 0;
+        for (int i = 0; i < text.length(); i++){
+            if (alphabet.indexOf(text.charAt(i)) != -1){
+                key.append(keyWord.charAt(counter));
+                counter++;
+                if (counter == keyWord.length()){
+                    counter = 0;
+                }
+            }else{
+                key.append(text.charAt(i));
+            }
         }
-        System.out.println(key);
-        return key;
+        return key.toString();
     }
 
     public void encrypt(CryptoDto cryptoDto){

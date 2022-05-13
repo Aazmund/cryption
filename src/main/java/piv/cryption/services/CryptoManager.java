@@ -20,6 +20,8 @@ public class CryptoManager {
     @Autowired
     private Vigenere vigenere;
     @Autowired
+    private Gronsfeld gronsfeld;
+    @Autowired
     private CaesarKeyWord caesarKeyWord;
     @Autowired
     private DoublePermutation doublePermutation;
@@ -38,6 +40,7 @@ public class CryptoManager {
             case "SinglePermutationKey": singlePermutationKey.decrypt(cryptoDto); break;
             case "Trithemius": trithemius.decrypt(cryptoDto); break;
             case "Vigenere": vigenere.decrypt(cryptoDto); break;
+            case "Gronsfeld": gronsfeld.decrypt(cryptoDto); break;
         }
     }
 
@@ -48,6 +51,7 @@ public class CryptoManager {
             case "SinglePermutationKey": singlePermutationKey.encrypt(cryptoDto); break;
             case "Trithemius": trithemius.encrypt(cryptoDto); break;
             case "Vigenere": vigenere.encrypt(cryptoDto); break;
+            case "Gronsfeld": gronsfeld.encrypt(cryptoDto); break;
         }
     }
 
