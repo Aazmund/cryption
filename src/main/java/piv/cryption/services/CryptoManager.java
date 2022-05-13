@@ -41,6 +41,7 @@ public class CryptoManager {
             case "Trithemius": trithemius.decrypt(cryptoDto); break;
             case "Vigenere": vigenere.decrypt(cryptoDto); break;
             case "Gronsfeld": gronsfeld.decrypt(cryptoDto); break;
+            case "CaesarKeyWord": caesarKeyWord.decrypt(cryptoDto); break;
         }
     }
 
@@ -52,6 +53,7 @@ public class CryptoManager {
             case "Trithemius": trithemius.encrypt(cryptoDto); break;
             case "Vigenere": vigenere.encrypt(cryptoDto); break;
             case "Gronsfeld": gronsfeld.encrypt(cryptoDto); break;
+            case "CaesarKeyWord": caesarKeyWord.encrypt(cryptoDto); break;
         }
     }
 

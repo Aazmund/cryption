@@ -14,7 +14,6 @@ public class CryptionController {
 
     //http://localhost:8080/crypto?action=empty&string=empty&cryptName=0&context=empty
     @GetMapping("/crypto")
-
     @ResponseBody
     public CryptoDto crypto(CryptoDto cryptoDto){
         cryptoManager.action(cryptoDto);
