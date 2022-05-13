@@ -17,13 +17,13 @@ public class Affine {
         StringBuilder result = new StringBuilder();
         int index, indexOf;
         for (int i = 0; i < text.length(); i++) {
-                if (text.charAt(i) == ' ')
-                    result.append(" ");
-                else {
-                    indexOf = alphabet.indexOf(text.charAt(i));
-                    index = (keyB+keyA*(indexOf))%alphabet.length();
+            if (alphabet.indexOf(text.charAt(i)) == -1)
+                result.append(text.charAt(i));
+            else {
+                indexOf = alphabet.indexOf(text.charAt(i));
+                index = (keyB+keyA*(indexOf))%alphabet.length();
                 result.append(alphabet.charAt(index));
-                }
+            }
         }
         cryptoDto.setResult(result.toString());
     }
@@ -42,8 +42,8 @@ public class Affine {
             }
         }
         for (int i = 0; i < text.length(); i++) {
-                if (text.charAt(i) == ' ')
-                    result.append(" ");
+                if (alphabet.indexOf(text.charAt(i)) == -1)
+                    result.append(text.charAt(i));
                 else {
                     indexOf = alphabet.indexOf(text.charAt(i));
                     index = ((indexOf-keyB)*multi)%alphabet.length();

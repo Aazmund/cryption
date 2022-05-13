@@ -18,11 +18,11 @@ public class CryptoManager {
     @Autowired
     private Trithemius trithemius;
     @Autowired
+    private Vigenere vigenere;
+    @Autowired
     private CaesarKeyWord caesarKeyWord;
     @Autowired
     private DoublePermutation doublePermutation;
-    @Autowired
-    private Vigenere vigenere;
 
     public void action(CryptoDto cryptoDto){
         switch (cryptoDto.getAction()){

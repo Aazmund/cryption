@@ -7,8 +7,7 @@ import piv.cryption.models.CryptoDto;
 public class Trithemius {
     private static final String alphabet =
             "абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
-            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-            ", ";
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public void encrypt(CryptoDto cryptoDto){
         String text = cryptoDto.getString();
@@ -20,9 +19,13 @@ public class Trithemius {
         int indexOf;
         int k;
         for (int i = 0; i < text.length(); i++) {
-            indexOf = alphabet.indexOf(text.charAt(i));
-            k = keyA*(i*i) + keyB*i + keyC;
-            result.append(alphabet.charAt((indexOf + k) % alphabet.length()));
+            if (alphabet.indexOf(text.charAt(i)) == -1)
+                result.append(text.charAt(i));
+            else {
+                indexOf = alphabet.indexOf(text.charAt(i));
+                k = keyA * (i * i) + keyB * i + keyC;
+                result.append(alphabet.charAt((indexOf + k) % alphabet.length()));
+            }
         }
         cryptoDto.setResult(result.toString());
     }
@@ -38,13 +41,17 @@ public class Trithemius {
         int k;
         int l;
         for (int i = 0; i < text.length(); i++) {
-            indexOf = alphabet.indexOf(text.charAt(i));
-            k = keyA*(i*i) + keyB*i + keyC;
-            l = indexOf - k;
-            while (l<0)
-                l += alphabet.length();
-            l = l % alphabet.length();
-            result.append(alphabet.charAt(l));
+            if (alphabet.indexOf(text.charAt(i)) == -1)
+                result.append(text.charAt(i));
+            else {
+                indexOf = alphabet.indexOf(text.charAt(i));
+                k = keyA * (i * i) + keyB * i + keyC;
+                l = indexOf - k;
+                while (l < 0)
+                    l += alphabet.length();
+                l = l % alphabet.length();
+                result.append(alphabet.charAt(l));
+            }
         }
         cryptoDto.setResult(result.toString());
     }

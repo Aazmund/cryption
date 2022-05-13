@@ -5,19 +5,32 @@ import piv.cryption.models.CryptoDto;
 
 @Service
 public class Caesar {
-    private static final String alphabet =
-            "абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
-                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                    ", ";
+    private static final String alphabetRus = "абвгдежзийклмнопрстуфхцчшщъыьэюя";
+    private static final String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
 
     public void encrypt(CryptoDto cryptoDto){
         String str = cryptoDto.getString();
         int key = Integer.parseInt(cryptoDto.getContext());
         StringBuilder result = new StringBuilder();
         int indexOf;
-        for(int i = 0; i < str.length(); i++) {
-            indexOf = alphabet.indexOf(str.charAt(i));
-            result.append(alphabet.charAt(indexOf + key));
+        if (alphabetRus.indexOf(str.charAt(0)) != -1){
+            for(int i = 0; i < str.length(); i++) {
+                if (alphabetRus.indexOf(str.charAt(i)) == -1)
+                    result.append(str.charAt(i));
+                else {
+                    indexOf = alphabetRus.indexOf(str.charAt(i));
+                    result.append(alphabetRus.charAt((indexOf + key) % alphabetRus.length()));
+                }
+            }
+        } else {
+            for(int i = 0; i < str.length(); i++) {
+                if (alphabetEng.indexOf(str.charAt(i)) == -1)
+                    result.append(str.charAt(i));
+                else {
+                    indexOf = alphabetEng.indexOf(str.charAt(i));
+                    result.append(alphabetEng.charAt((indexOf + key) % alphabetEng.length()));
+                }
+            }
         }
         cryptoDto.setResult(result.toString());
     }
@@ -27,12 +40,23 @@ public class Caesar {
         int key = Integer.parseInt(cryptoDto.getContext());
         StringBuilder result = new StringBuilder();
         int indexOf;
-        for(int i = 0; i < str.length(); i++){
-            indexOf = alphabet.indexOf(str.charAt(i));
-            if(indexOf - key >= 0){
-                result.append(alphabet.charAt(indexOf - key));
-            }else{
-                result.append(alphabet.charAt(indexOf - key) + alphabet.length());
+        if (alphabetRus.indexOf(str.charAt(0)) != -1) {
+            for (int i = 0; i < str.length(); i++) {
+                if (alphabetRus.indexOf(str.charAt(i)) == -1)
+                    result.append(str.charAt(i));
+                else {
+                    indexOf = alphabetRus.indexOf(str.charAt(i));
+                    result.append(alphabetRus.charAt((indexOf - key + alphabetRus.length()) % alphabetRus.length()));
+                }
+            }
+        } else {
+            for (int i = 0; i < str.length(); i++) {
+                if (alphabetEng.indexOf(str.charAt(i)) == -1)
+                    result.append(str.charAt(i));
+                else {
+                    indexOf = alphabetEng.indexOf(str.charAt(i));
+                    result.append(alphabetEng.charAt((indexOf - key + alphabetEng.length()) % alphabetEng.length()));
+                }
             }
         }
         cryptoDto.setResult(result.toString());
