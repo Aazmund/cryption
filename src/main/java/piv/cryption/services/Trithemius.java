@@ -5,12 +5,11 @@ import piv.cryption.models.CryptoDto;
 
 @Service
 public class Trithemius {
-    private static final String alphabet =
-            "абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
-            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String alphabetRus = "абвгдежзийклмнопрстуфхцчшщъыьэюя";
+    private static final String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
 
     public void encrypt(CryptoDto cryptoDto){
-        String text = cryptoDto.getString();
+        String text = cryptoDto.getString().toLowerCase();
         String[] key = cryptoDto.getContext().split("@",3);
         int keyA = Integer.parseInt(key[0]);
         int keyB = Integer.parseInt(key[1]);
@@ -18,6 +17,13 @@ public class Trithemius {
         StringBuilder result = new StringBuilder();
         int indexOf;
         int k;
+        String alphabet;
+        if (alphabetRus.contains(String.valueOf(text.charAt(0)))){
+            alphabet = alphabetRus;
+        }
+        else{
+            alphabet = alphabetEng;
+        }
         for (int i = 0; i < text.length(); i++) {
             if (alphabet.indexOf(text.charAt(i)) == -1)
                 result.append(text.charAt(i));
@@ -31,7 +37,7 @@ public class Trithemius {
     }
 
     public void decrypt(CryptoDto cryptoDto){
-        String text = cryptoDto.getString();
+        String text = cryptoDto.getString().toLowerCase();
         String[] key = cryptoDto.getContext().split("@",3);
         int keyA = Integer.parseInt(key[0]);
         int keyB = Integer.parseInt(key[1]);
@@ -40,6 +46,13 @@ public class Trithemius {
         int indexOf;
         int k;
         int l;
+        String alphabet;
+        if (alphabetRus.contains(String.valueOf(text.charAt(0)))){
+            alphabet = alphabetRus;
+        }
+        else{
+            alphabet = alphabetEng;
+        }
         for (int i = 0; i < text.length(); i++) {
             if (alphabet.indexOf(text.charAt(i)) == -1)
                 result.append(text.charAt(i));

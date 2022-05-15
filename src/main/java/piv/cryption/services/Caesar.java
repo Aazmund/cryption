@@ -9,54 +9,46 @@ public class Caesar {
     private static final String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
 
     public void encrypt(CryptoDto cryptoDto){
-        String text = cryptoDto.getString();
+        String text = cryptoDto.getString().toLowerCase();
         int key = Integer.parseInt(cryptoDto.getContext());
         StringBuilder result = new StringBuilder();
         int indexOf;
-        if (alphabetRus.indexOf(text.charAt(0)) != -1){
-            for(int i = 0; i < text.length(); i++) {
-                if (alphabetRus.indexOf(text.charAt(i)) == -1)
-                    result.append(text.charAt(i));
-                else {
-                    indexOf = alphabetRus.indexOf(text.charAt(i));
-                    result.append(alphabetRus.charAt((indexOf + key) % alphabetRus.length()));
-                }
-            }
-        } else {
-            for(int i = 0; i < text.length(); i++) {
-                if (alphabetEng.indexOf(text.charAt(i)) == -1)
-                    result.append(text.charAt(i));
-                else {
-                    indexOf = alphabetEng.indexOf(text.charAt(i));
-                    result.append(alphabetEng.charAt((indexOf + key) % alphabetEng.length()));
-                }
+        String alphabet;
+        if (alphabetRus.contains(String.valueOf(text.charAt(0)))){
+            alphabet = alphabetRus;
+        }
+        else{
+            alphabet = alphabetEng;
+        }
+        for(int i = 0; i < text.length(); i++) {
+            if (alphabet.indexOf(text.charAt(i)) == -1)
+                result.append(text.charAt(i));
+            else {
+                indexOf = alphabet.indexOf(text.charAt(i));
+                result.append(alphabet.charAt((indexOf + key) % alphabet.length()));
             }
         }
         cryptoDto.setResult(result.toString());
     }
 
     public void decrypt(CryptoDto cryptoDto){
-        String text = cryptoDto.getString();
+        String text = cryptoDto.getString().toLowerCase();
         int key = Integer.parseInt(cryptoDto.getContext());
         StringBuilder result = new StringBuilder();
         int indexOf;
-        if (alphabetRus.indexOf(text.charAt(0)) != -1) {
-            for (int i = 0; i < text.length(); i++) {
-                if (alphabetRus.indexOf(text.charAt(i)) == -1)
-                    result.append(text.charAt(i));
-                else {
-                    indexOf = alphabetRus.indexOf(text.charAt(i));
-                    result.append(alphabetRus.charAt((indexOf - key + alphabetRus.length()) % alphabetRus.length()));
-                }
-            }
-        } else {
-            for (int i = 0; i < text.length(); i++) {
-                if (alphabetEng.indexOf(text.charAt(i)) == -1)
-                    result.append(text.charAt(i));
-                else {
-                    indexOf = alphabetEng.indexOf(text.charAt(i));
-                    result.append(alphabetEng.charAt((indexOf - key + alphabetEng.length()) % alphabetEng.length()));
-                }
+        String alphabet;
+        if (alphabetRus.contains(String.valueOf(text.charAt(0)))){
+            alphabet = alphabetRus;
+        }
+        else{
+            alphabet = alphabetEng;
+        }
+        for (int i = 0; i < text.length(); i++) {
+            if (alphabet.indexOf(text.charAt(i)) == -1)
+                result.append(text.charAt(i));
+            else {
+                indexOf = alphabet.indexOf(text.charAt(i));
+                result.append(alphabet.charAt((indexOf - key + alphabet.length()) % alphabet.length()));
             }
         }
         cryptoDto.setResult(result.toString());

@@ -10,6 +10,11 @@ public class CryptoDto
     private String context;
     private String result;
 
+    public CryptoDto(String string, String context) {
+        this.string = string;
+        this.context = context;
+    }
+
     public String getAction() {
         return action;
     }

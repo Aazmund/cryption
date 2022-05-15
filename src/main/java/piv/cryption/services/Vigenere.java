@@ -5,11 +5,10 @@ import piv.cryption.models.CryptoDto;
 
 @Service
 public class Vigenere {
-    private static final String alphabet =
-            "абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
-            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String alphabetRus = "абвгдежзийклмнопрстуфхцчшщъыьэюя";
+    private static final String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
 
-    private String generateKey(String text, String keyWord)
+    private String generateKey(String text, String keyWord, String alphabet)
     {
         StringBuilder key = new StringBuilder();
         int counter = 0;
@@ -28,11 +27,18 @@ public class Vigenere {
     }
 
     public void encrypt(CryptoDto cryptoDto){
-        String text = cryptoDto.getString();
-        String keyWord = cryptoDto.getContext();
-        String key = generateKey(text, keyWord);
+        String text = cryptoDto.getString().toLowerCase();
+        String keyWord = cryptoDto.getContext().toLowerCase();
         StringBuilder result = new StringBuilder();
         int index;
+        String alphabet;
+        if (alphabetRus.contains(String.valueOf(text.charAt(0)))){
+            alphabet = alphabetRus;
+        }
+        else{
+            alphabet = alphabetEng;
+        }
+        String key = generateKey(text, keyWord, alphabet);
         for (int i = 0; i < text.length(); i++) {
             if (alphabet.indexOf(text.charAt(i)) == -1)
                 result.append(text.charAt(i));
@@ -46,11 +52,18 @@ public class Vigenere {
     }
 
     public void decrypt(CryptoDto cryptoDto){
-        String text = cryptoDto.getString();
-        String keyWord = cryptoDto.getContext();
-        String key = generateKey(text, keyWord);
+        String text = cryptoDto.getString().toLowerCase();
+        String keyWord = cryptoDto.getContext().toLowerCase();
         StringBuilder result = new StringBuilder();
         int index;
+        String alphabet;
+        if (alphabetRus.contains(String.valueOf(text.charAt(0)))){
+            alphabet = alphabetRus;
+        }
+        else{
+            alphabet = alphabetEng;
+        }
+        String key = generateKey(text, keyWord, alphabet);
         for (int i = 0; i < text.length() && i < key.length(); i++) {
             if (alphabet.indexOf(text.charAt(i)) == -1)
                 result.append(text.charAt(i));
