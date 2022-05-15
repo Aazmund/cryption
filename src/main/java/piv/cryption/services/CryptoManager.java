@@ -25,6 +25,8 @@ public class CryptoManager {
     private CaesarKeyWord caesarKeyWord;
     @Autowired
     private DoublePermutation doublePermutation;
+    @Autowired
+    private Hill hill;
 
     public void action(CryptoDto cryptoDto){
         switch (cryptoDto.getAction()){
@@ -42,6 +44,7 @@ public class CryptoManager {
             case "Vigenere": vigenere.decrypt(cryptoDto); break;
             case "Gronsfeld": gronsfeld.decrypt(cryptoDto); break;
             case "CaesarKeyWord": caesarKeyWord.decrypt(cryptoDto); break;
+            case "Hill": hill.decrypt(cryptoDto); break;
         }
     }
 
@@ -54,6 +57,7 @@ public class CryptoManager {
             case "Vigenere": vigenere.encrypt(cryptoDto); break;
             case "Gronsfeld": gronsfeld.encrypt(cryptoDto); break;
             case "CaesarKeyWord": caesarKeyWord.encrypt(cryptoDto); break;
+            case "Hill": hill.encrypt(cryptoDto); break;
         }
     }
 
