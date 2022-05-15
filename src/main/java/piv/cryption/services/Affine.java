@@ -5,23 +5,29 @@ import piv.cryption.models.CryptoDto;
 
 @Service
 public class Affine {
-    //private static final String alphabet = "абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
-    private static final String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
+    private static final String alphabetRus = "абвгдежзийклмнопрстуфхцчшщъыьэюя";
+    private static final String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
 
     public void encrypt(CryptoDto cryptoDto){
-        String text = cryptoDto.getString();
+        String text = cryptoDto.getString().toLowerCase();
         String[] key = cryptoDto.getContext().split("@",2);
         int keyA = Integer.parseInt(key[0]);
         int keyB = Integer.parseInt(key[1]);
         StringBuilder result = new StringBuilder();
         int index, indexOf;
+        String alphabet;
+        if (alphabetRus.contains(String.valueOf(text.charAt(0)))){
+            alphabet = alphabetRus;
+        }
+        else{
+            alphabet = alphabetEng;
+        }
         for (int i = 0; i < text.length(); i++) {
             if (alphabet.indexOf(text.charAt(i)) == -1)
                 result.append(text.charAt(i));
             else {
                 indexOf = alphabet.indexOf(text.charAt(i));
-                index = (keyB+keyA*(indexOf))%alphabet.length();
+                index = (keyB + keyA * (indexOf)) % alphabet.length();
                 result.append(alphabet.charAt(index));
             }
         }
@@ -29,15 +35,22 @@ public class Affine {
     }
 
     public void decrypt(CryptoDto cryptoDto){
-        String text = cryptoDto.getString();
+        String text = cryptoDto.getString().toLowerCase();
         String[] key = cryptoDto.getContext().split("@",2);
         int keyA = Integer.parseInt(key[0]);
         int keyB = Integer.parseInt(key[1]);
         StringBuilder result = new StringBuilder();
         int multi = 0;
         int index, indexOf;
+        String alphabet;
+        if (alphabetRus.contains(String.valueOf(text.charAt(0)))){
+            alphabet = alphabetRus;
+        }
+        else{
+            alphabet = alphabetEng;
+        }
         for (int i = 0; i < alphabet.length(); i++) {
-            if ((keyA*i)%alphabet.length()==1) {
+            if ((keyA * i) % alphabet.length()==1) {
                 multi = i;
             }
         }
@@ -46,9 +59,9 @@ public class Affine {
                     result.append(text.charAt(i));
                 else {
                     indexOf = alphabet.indexOf(text.charAt(i));
-                    index = ((indexOf-keyB)*multi)%alphabet.length();
+                    index = ((indexOf - keyB) * multi) % alphabet.length();
                     if (index < 0)
-                        index+=alphabet.length();
+                        index += alphabet.length();
                     result.append(alphabet.charAt(index));
                 }
         }
