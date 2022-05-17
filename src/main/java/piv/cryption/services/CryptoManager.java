@@ -30,34 +30,35 @@ public class CryptoManager {
 
     public void action(CryptoDto cryptoDto){
         switch (cryptoDto.getAction()){
-            case "Decrypt": decrypt(cryptoDto); break;
-            case "Encrypt": encrypt(cryptoDto); break;
-            case "MagicSquare": magicSquare.action(cryptoDto); break;
+            case "decrypt": decrypt(cryptoDto); break;
+            case "encrypt": encrypt(cryptoDto); break;
+            case "magicSquare": magicSquare.action(cryptoDto); break;
         }
     }
+
     private void decrypt(CryptoDto cryptoDto){
         switch (cryptoDto.getCryptName()){
-            case "Caesar": caesar.decrypt(cryptoDto); break;
-            case "Affine": affine.decrypt(cryptoDto); break;
-            case "SinglePermutationKey": singlePermutationKey.decrypt(cryptoDto); break;
-            case "Trithemius": trithemius.decrypt(cryptoDto); break;
-            case "Vigenere": vigenere.decrypt(cryptoDto); break;
-            case "Gronsfeld": gronsfeld.decrypt(cryptoDto); break;
-            case "CaesarKeyWord": caesarKeyWord.decrypt(cryptoDto); break;
-            case "Hill": hill.decrypt(cryptoDto); break;
+            case "caesar": caesar.decrypt(cryptoDto); break;
+            case "affine": affine.decrypt(cryptoDto); break;
+            case "singlePermutationKey": singlePermutationKey.decrypt(cryptoDto); break;
+            case "trithemius": trithemius.decrypt(cryptoDto); break;
+            case "vigenere": vigenere.decrypt(cryptoDto); break;
+            case "gronsfeld": gronsfeld.decrypt(cryptoDto); break;
+            case "caesarKeyWord": caesarKeyWord.decrypt(cryptoDto); break;
+            case "hill": hill.decrypt(cryptoDto); break;
         }
     }
 
     private void encrypt(CryptoDto cryptoDto){
         switch (cryptoDto.getCryptName()){
-            case "Caesar": caesar.encrypt(cryptoDto); break;
-            case "Affine": affine.encrypt(cryptoDto); break;
-            case "SinglePermutationKey": singlePermutationKey.encrypt(cryptoDto); break;
-            case "Trithemius": trithemius.encrypt(cryptoDto); break;
-            case "Vigenere": vigenere.encrypt(cryptoDto); break;
-            case "Gronsfeld": gronsfeld.encrypt(cryptoDto); break;
-            case "CaesarKeyWord": caesarKeyWord.encrypt(cryptoDto); break;
-            case "Hill": hill.encrypt(cryptoDto); break;
+            case "caesar": caesar.encrypt(cryptoDto); break;
+            case "affine": affine.encrypt(cryptoDto); break;
+            case "singlePermutationKey": singlePermutationKey.encrypt(cryptoDto); break;
+            case "trithemius": trithemius.encrypt(cryptoDto); break;
+            case "vigenere": vigenere.encrypt(cryptoDto); break;
+            case "gronsfeld": gronsfeld.encrypt(cryptoDto); break;
+            case "caesarKeyWord": caesarKeyWord.encrypt(cryptoDto); break;
+            case "hill": hill.encrypt(cryptoDto); break;
         }
     }
 

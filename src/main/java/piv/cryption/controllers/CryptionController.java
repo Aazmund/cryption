@@ -17,8 +17,7 @@ public class CryptionController {
     @Autowired
     private CryptoManager cryptoManager;
 
-    //http://localhost:8080/crypto?action=empty&string=empty&cryptName=0&context=empty
-    @GetMapping("/crypto")
+    @PostMapping("/crypto")
     public ResponseEntity<JSONObject> crypto(@RequestBody CryptoDto cryptoDto){
         try{
             cryptoManager.action(cryptoDto);
