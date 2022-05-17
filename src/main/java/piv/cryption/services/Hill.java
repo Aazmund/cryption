@@ -155,8 +155,8 @@ public class Hill {
         key2D[0][1] *= -1;
         key2D[1][0] *= -1;
 
-        key2D[0][1] = moduloFunc(key2D[0][1], 26);
-        key2D[1][0] = moduloFunc(key2D[1][0], 26);
+        key2D[0][1] = moduloFunc(key2D[0][1], alphabet.length());
+        key2D[1][0] = moduloFunc(key2D[1][0], alphabet.length());
 
         // multiplying multiplicative inverse with adjugate matrix
         for (int i = 0; i < 2; i++) {
@@ -181,7 +181,7 @@ public class Hill {
         cryptoDto.setResult(result.toString());
     }
 
-    private static int moduloFunc(int a, int b){
+    private int moduloFunc(int a, int b){
         int result = a % b;
         if (result < 0){
             result += b;

@@ -1,27 +1,23 @@
 package piv.cryption.services;
 
 import org.springframework.stereotype.Service;
+import piv.cryption.models.CryptoDto;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Service
 public class DoublePermutation {
-    private static final String smallLetterEng = "abcdefghijklmnopqrstuvwxyz";
-    private static final String smallLetterRus = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
-
-    public static void crypt(String str, String key1, String key2){
-        String result = "";
-
+    public void encrypt(CryptoDto cryptoDto){
+        String str = cryptoDto.getString().toLowerCase();
+        String[] key = cryptoDto.getContext().split("@",2);
+        String key1 = key[0];
+        String key2 = key[1];
+        StringBuilder result = new StringBuilder();
         int col = key1.length();
         int row = key2.length();
+        char[][] array = new char[row][col];
 
         //заполняем матрицу
-
-        char[][] array = new char[row][col];
-        char[][] bufferArray = new char[row][col];
-
         for (int i = 0; i < row; i++){
             for (int j = 0; j < col; j++){
                 array[i][j] = str.charAt(0);
@@ -41,40 +37,40 @@ public class DoublePermutation {
         for (int j = 0; j < col; j++) {
             int index = sortedKey1.indexOf(key1.charAt(j));
             for (int i = 0; i < row; i++) {
-                result += array[i][index];
+                result.append(array[i][index]);
             }
         }
 
         //переставляем строки
-
         for (int j = 0; j < col; j++){
             for (int i = 0; i < row; i++){
                 array[i][j] = result.charAt(0);
-                result = result.substring(1);
+                result = new StringBuilder(result.substring(1));
             }
         }
 
         for (int i = 0; i < row; i++){
             int index = sortedKey2.indexOf(key2.charAt(i));
             for (int j = 0; j < col; j++){
-                result += array[index][j];
+                result.append(array[index][j]);
             }
         }
 
 //        System.out.println(result);
-        decrypt(result, key1, key2);
+        cryptoDto.setResult(result.toString());
     }
 
-    public static void decrypt(String str, String key1, String key2){
-        String result = "";
-
+    public void decrypt(CryptoDto cryptoDto){
+        String str = cryptoDto.getString().toLowerCase();
+        String[] key = cryptoDto.getContext().split("@",2);
+        String key1 = key[0];
+        String key2 = key[1];
+        StringBuilder result = new StringBuilder();
         int col = key1.length();
         int row = key2.length();
-
-        //заполняем матрицу
-
         char[][] array = new char[row][col];
 
+        //заполняем матрицу
         for (int i = 0; i < row; i++){
             for (int j = 0; j < col; j++){
                 array[i][j] = str.charAt(0);
@@ -91,52 +87,41 @@ public class DoublePermutation {
         String sortedKey2 = String.copyValueOf(key2Array);
 
         //переставляем строки
-
         for (int i = 0; i < row; i++){
             int index = key2.indexOf(sortedKey2.charAt(i));
             for (int j = 0; j < col; j++){
-                result += array[index][j];
+                result.append(array[index][j]);
             }
         }
 
         for (int i = 0; i < row; i++){
             for (int j = 0; j < col; j++){
                 array[i][j] = result.charAt(0);
-                result = result.substring(1);
+                result = new StringBuilder(result.substring(1));
             }
         }
 
         //перемещаем столбцы
-
         for (int j = 0; j < col; j++){
             int index = key1.indexOf(sortedKey1.charAt(j));
             for (int i = 0; i < row; i++){
-                result += array[i][index];
+                result.append(array[i][index]);
             }
         }
 
         for (int j = 0; j < col; j++){
             for (int i = 0; i < row; i++){
                 array[i][j] = result.charAt(0);
-                result = result.substring(1);
+                result = new StringBuilder(result.substring(1));
             }
         }
 
         for (int i = 0; i < row; i++){
             for (int j = 0; j < col; j++){
-                result += array[i][j];
+                result.append(array[i][j]);
             }
         }
 
-        System.out.println(result);
-    }
-
-    public static void main(String[] args) {
-
-        crypt("hide the gold in the tree stumps", "qwertyui", "azsx");
-        crypt("punks never die punk never die", "kmjnf", "asdghj");
-
-        crypt("боже храни криптографиюю", "крот", "продге");
-        crypt("как же сложно придумать рандомные фразы для теста шифров", "памгитя", "опрмифвз");
+        cryptoDto.setResult(result.toString());
     }
 }

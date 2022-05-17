@@ -3,52 +3,51 @@ package piv.cryption.services;
 import org.springframework.stereotype.Service;
 import piv.cryption.models.CryptoDto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class Playfair {
     private static final String alphabetRus = "абвгдежзийклмнопрстуфхцчшщъыьэюя";
     private static final String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
 
-    public static String keyValidator(String key){
-
-        //чистим ключ от пробелов и повторяющихся символов
-
+    private String keyValidator(String key){
+        //чистим ключ от повторяющихся символов
         for (int i = 0; i < key.length(); i++){
             for (int j = i+1; j < key.length(); j++){
                 if (i != j && key.charAt(i) == key.charAt(j)){
                     key = key.substring(0, j) + key.substring(j + 1);
-                }
-                if (key.charAt(i) == ' '){
-                    key = key.substring(0, i) + key.substring(i + 1);
                 }
             }
         }
         return key;
     }
 
-    public static void crypt(String str, String key, String alphabet){
-        String bufferKey = key;
-        String bufferAlpha = alphabet;
-        String result = "";
+    public void encrypt(CryptoDto cryptoDto){
+        String str = cryptoDto.getString().toLowerCase().replaceAll("\\s" , "");
+        String bufferKey = cryptoDto.getContext().toLowerCase().replaceAll("\\s" , "");
+        String alphabet;
+        String bufferAlpha;
+        StringBuilder result = new StringBuilder();
         char[][] matrix;
-        int col = 0;
-        int row = 0;
-
-        if (alphabet.charAt(0) == 'a'){
-            col = 5;
-            row = 5;
-            matrix = new char[col][row];
-        }else{
+        int col;
+        int row;
+        if (alphabetRus.contains(String.valueOf(str.charAt(0)))){
+            alphabet = alphabetRus;
             col = 8;
             row = 4;
-            matrix = new char[col][row];
+            str = str.replaceAll("ъ", "ь");
+            if (str.length() % 2 != 0)
+                str += 'ь';
         }
-
+        else{
+            alphabet = alphabetEng;
+            col = 5;
+            row = 5;
+            str = str.replaceAll("j", "i");
+            if (str.length() % 2 != 0)
+                str += 'x';
+        }
+        matrix = new char[col][row];
+        bufferAlpha = alphabet;
         bufferKey = keyValidator(bufferKey);
-        str = str.replaceAll("j", "i");
-        str = str.replaceAll("ъ", "ь");
 
         //записываем ключ в матрицу и удаляем из алфавита этот символ
 
@@ -75,16 +74,6 @@ public class Playfair {
         }
 
         //разбиваем строку на биграмы и шифруем каждую
-
-        str = str.replaceAll(" ", "");
-        if (str.length() % 2 != 0){
-            if (alphabet.charAt(0) == 'a'){
-                str += 'x';
-            }else{
-                str += 'ь';
-            }
-        }
-
         for (int bigram = 0; bigram < str.length() - 1; bigram += 2){
             int bufFirstI = -1, bufFirstJ = -1, bufSecondI = -1, bufSecondJ = -1;
 
@@ -113,10 +102,6 @@ public class Playfair {
                 }else{
                     bufSecondI = 0;
                 }
-
-                result += matrix[bufFirstI][bufFirstJ];
-                result += matrix[bufSecondI][bufSecondJ];
-
             } else if (bufFirstI == bufSecondI){ //если символы в отдной строке
                 if (bufFirstJ < row - 1){
                     bufFirstJ++;
@@ -130,52 +115,41 @@ public class Playfair {
                     bufSecondJ = 0;
                 }
 
-                result += matrix[bufFirstI][bufFirstJ];
-                result += matrix[bufSecondI][bufSecondJ];
-
             } else { //если символы в разных строках столбцах
 
                 int buffer = bufFirstJ;
                 bufFirstJ = bufSecondJ;
                 bufSecondJ = buffer;
 
-                result += matrix[bufFirstI][bufFirstJ];
-                result += matrix[bufSecondI][bufSecondJ];
-
             }
+            result.append(matrix[bufFirstI][bufFirstJ]);
+            result.append(matrix[bufSecondI][bufSecondJ]);
         }
-
-//        for (int i = 0; i < 5; i++){
-//            for (int j = 0; j < 5; j++){
-//                System.out.print(matrix[i][j] + "  ");
-//            }
-//            System.out.println();
-//        }
-
-//        System.out.println(result);
-        decrypt(result, key, alphabet);
+        cryptoDto.setResult(result.toString());
     }
 
-    public static void decrypt(String str, String key, String alphabet){
-        String bufferKey = key;
-        String bufferAlpha = alphabet;
-        String result = "";
+    public void decrypt(CryptoDto cryptoDto){
+        String str = cryptoDto.getString().toLowerCase().replaceAll("\\s" , "");
+        String bufferKey = cryptoDto.getContext().toLowerCase().replaceAll("\\s" , "");
+        String alphabet;
+        String bufferAlpha;
+        StringBuilder result = new StringBuilder();
         char[][] matrix;
-        int col = 0;
-        int row = 0;
-
-        if (alphabet.charAt(0) == 'a'){
-            col = 5;
-            row = 5;
-            matrix = new char[col][row];
-        }else{
+        int col;
+        int row;
+        if (alphabetRus.contains(String.valueOf(str.charAt(0)))){
+            alphabet = alphabetRus;
             col = 8;
             row = 4;
-            matrix = new char[col][row];
         }
-
+        else{
+            alphabet = alphabetEng;
+            col = 5;
+            row = 5;
+        }
+        matrix = new char[col][row];
+        bufferAlpha = alphabet;
         bufferKey = keyValidator(bufferKey);
-        str = str.replaceAll("j", "i");
 
         //записываем ключ в матрицу и удаляем из алфавита этот символ
 
@@ -191,7 +165,6 @@ public class Playfair {
         }
 
         //дополянем матрицу алфавитом
-
         for (int i = 0; i < col; i++){
             for(int j = 0; j < row; j++){
                 if(matrix[i][j] == '0'){
@@ -202,12 +175,6 @@ public class Playfair {
         }
 
         //разбиваем строку на биграмы и шифруем каждую
-
-        str = str.replaceAll(" ", "");
-        if (str.length() % 2 != 0){
-            str += 'x';
-        }
-
         for (int bigram = 0; bigram < str.length() - 1; bigram += 2){
             int bufFirstI = -1, bufFirstJ = -1, bufSecondI = -1, bufSecondJ = -1;
 
@@ -237,9 +204,6 @@ public class Playfair {
                     bufSecondI = col - 1;
                 }
 
-                result += matrix[bufFirstI][bufFirstJ];
-                result += matrix[bufSecondI][bufSecondJ];
-
             } else if (bufFirstI == bufSecondI){ //если символы в одной строке
                 if (bufFirstJ - 1 >= 0){
                     bufFirstJ--;
@@ -252,44 +216,17 @@ public class Playfair {
                 }else{
                     bufSecondJ = row - 1;
                 }
-
-                result += matrix[bufFirstI][bufFirstJ];
-                result += matrix[bufSecondI][bufSecondJ];
-
             } else { //если символы в разных строках столбцах
 
                 int buffer = bufFirstJ;
                 bufFirstJ = bufSecondJ;
                 bufSecondJ = buffer;
-
-                result += matrix[bufFirstI][bufFirstJ];
-                result += matrix[bufSecondI][bufSecondJ];
-
             }
+
+            result.append(matrix[bufFirstI][bufFirstJ]);
+            result.append(matrix[bufSecondI][bufSecondJ]);
         }
 
-        System.out.println(result);
-    }
-
-    public static void main(String[] args) {
-        List<CryptoDto> dto = new ArrayList<>();
-        dto.add(new CryptoDto("hide the gold in the tree stump", "playfair example"));
-        dto.add(new CryptoDto("punks never die","commander"));
-        dto.add(new CryptoDto("for example","table"));
-        dto.add(new CryptoDto("idiocy often looks like intelligence","wheatson"));
-
-        for (CryptoDto cryptoDto: dto) {
-            crypt(cryptoDto);
-        }
-
-        List<CryptoDto> dtoRus = new ArrayList<>();
-        dtoRus.add(new CryptoDto("боже храни криптографию", "ключ"));
-        dtoRus.add(new CryptoDto("дарова ильюха как дела", "пример плейфера"));
-        dtoRus.add(new CryptoDto("как же сложно придумать рандомные фразы для теста шифровки", "памагитя"));
-        dtoRus.add(new CryptoDto("ночь улица фонарь аптека", "опрмифвзх"));
-
-        for (CryptoDto cryptoDto: dtoRus) {
-            crypt(cryptoDto);
-        }
+        cryptoDto.setResult(result.toString());
     }
 }
