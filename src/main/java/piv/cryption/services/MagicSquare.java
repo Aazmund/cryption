@@ -34,7 +34,7 @@ public class MagicSquare {
         }
         for (int i = 0; i < magicSquare.length; i++) {
             for (int j = 0; j < magicSquare.length; j++) {
-                result.append(magicSquare[i][j]);
+                result.append(magicSquare[i][j]+",");
             }
         }
         cryptoDto.setResult(result.toString());
