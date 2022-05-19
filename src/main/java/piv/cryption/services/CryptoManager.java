@@ -29,6 +29,8 @@ public class CryptoManager {
     private Hill hill;
     @Autowired
     private Playfair playfair;
+    @Autowired
+    private CardanGrille cardanGrille;
 
     public void action(CryptoDto cryptoDto){
         switch (cryptoDto.getAction()){
@@ -50,6 +52,7 @@ public class CryptoManager {
             case "doublePermutation": doublePermutation.decrypt(cryptoDto); break;
             case "hill": hill.decrypt(cryptoDto); break;
             case "playfair": playfair.decrypt(cryptoDto); break;
+            case "cardanGrille": cardanGrille.decrypt(cryptoDto); break;
         }
     }
 
@@ -65,6 +68,7 @@ public class CryptoManager {
             case "doublePermutation": doublePermutation.encrypt(cryptoDto); break;
             case "hill": hill.encrypt(cryptoDto); break;
             case "playfair": playfair.encrypt(cryptoDto); break;
+            case "cardanGrille": cardanGrille.encrypt(cryptoDto); break;
         }
     }
 
