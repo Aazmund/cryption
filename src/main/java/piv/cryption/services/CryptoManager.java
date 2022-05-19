@@ -35,6 +35,8 @@ public class CryptoManager {
     private Rout rout;
     @Autowired
     private CardanGrille cardanGrille;
+    @Autowired
+    private Authorial authorial;
 
     public void action(CryptoDto cryptoDto){
         switch (cryptoDto.getAction()){
@@ -59,6 +61,7 @@ public class CryptoManager {
             case "richelieu": richelieu.decrypt(cryptoDto); break;
             case "rout": rout.decrypt(cryptoDto); break;
             case "cardanGrille": cardanGrille.decrypt(cryptoDto); break;
+            case "authorial": authorial.decrypt(cryptoDto); break;
         }
     }
 
@@ -77,6 +80,7 @@ public class CryptoManager {
             case "richelieu": richelieu.encrypt(cryptoDto); break;
             case "rout": rout.encrypt(cryptoDto); break;
             case "cardanGrille": cardanGrille.encrypt(cryptoDto); break;
+            case "authorial": authorial.encrypt(cryptoDto); break;
         }
     }
 

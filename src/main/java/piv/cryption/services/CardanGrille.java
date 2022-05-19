@@ -7,12 +7,12 @@ import piv.cryption.models.CryptoDto;
 public class CardanGrille {
     private static final int SIZE = 6;
     private static final int[][] KEY =
-            {{0, 0, 0, 0, 0, 1},
-                    {0, 0, 1, 0, 0, 0},
-                    {1, 0, 0, 0, 0, 1},
-                    {0, 0, 1, 0, 1, 0},
-                    {1, 0, 0, 0, 1, 0},
-                    {0, 1, 0, 0, 0, 0}};
+                    {{0, 0, 0, 0, 0, 1},
+                     {0, 0, 1, 0, 0, 0},
+                     {1, 0, 0, 0, 0, 1},
+                     {0, 0, 1, 0, 1, 0},
+                     {1, 0, 0, 0, 1, 0},
+                     {0, 1, 0, 0, 0, 0}};
 
     public void encrypt(CryptoDto cryptoDto){
         String text = cryptoDto.getString().toLowerCase().replaceAll("\\s" , "");
@@ -124,7 +124,6 @@ public class CardanGrille {
                 }
             }
         }
-        result = new StringBuilder(result.toString().replaceAll("[.]", ""));
-        cryptoDto.setResult(result.toString());
+        cryptoDto.setResult(result.toString().replaceAll("[.]", ""));
     }
 }

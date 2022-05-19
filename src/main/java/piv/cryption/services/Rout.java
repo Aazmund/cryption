@@ -47,7 +47,6 @@ public class Rout {
         StringBuilder result = new StringBuilder();
         int length = (int) Math.sqrt(text.length());
         char[][] charText = new char[length][length];
-        System.out.println(length);
 
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length; j++) {
@@ -64,7 +63,6 @@ public class Rout {
                     result.append(charText[i][length - j - 1]);
             }
         }
-        result = new StringBuilder(result.toString().replaceAll("[.]", ""));
-        cryptoDto.setResult(result.toString());
+        cryptoDto.setResult(result.toString().replaceAll("[.]", ""));
     }
 }
