@@ -1,7 +1,5 @@
 package piv.cryption.models;
 
-import org.springframework.stereotype.Component;
-
 public class CryptoDto
 {
     private String action;
@@ -9,11 +7,6 @@ public class CryptoDto
     private String cryptName;
     private String context;
     private String result;
-
-    public CryptoDto(String string, String context) {
-        this.string = string;
-        this.context = context;
-    }
 
     public String getAction() {
         return action;
