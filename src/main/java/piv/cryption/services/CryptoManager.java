@@ -31,6 +31,8 @@ public class CryptoManager {
     private Playfair playfair;
     @Autowired
     private Richelieu richelieu;
+    @Autowired
+    private Rout rout;
 
     public void action(CryptoDto cryptoDto){
         switch (cryptoDto.getAction()){
@@ -53,6 +55,7 @@ public class CryptoManager {
             case "hill": hill.decrypt(cryptoDto); break;
             case "playfair": playfair.decrypt(cryptoDto); break;
             case "richelieu": richelieu.decrypt(cryptoDto); break;
+            case "rout": rout.decrypt(cryptoDto); break;
         }
     }
 
@@ -69,6 +72,7 @@ public class CryptoManager {
             case "hill": hill.encrypt(cryptoDto); break;
             case "playfair": playfair.encrypt(cryptoDto); break;
             case "richelieu": richelieu.encrypt(cryptoDto); break;
+            case "rout": rout.encrypt(cryptoDto); break;
         }
     }
 
