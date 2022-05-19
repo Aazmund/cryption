@@ -30,7 +30,7 @@ public class CryptoManager {
     @Autowired
     private Playfair playfair;
     @Autowired
-    private CardanGrille cardanGrille;
+    private Richelieu richelieu;
 
     public void action(CryptoDto cryptoDto){
         switch (cryptoDto.getAction()){
@@ -52,7 +52,7 @@ public class CryptoManager {
             case "doublePermutation": doublePermutation.decrypt(cryptoDto); break;
             case "hill": hill.decrypt(cryptoDto); break;
             case "playfair": playfair.decrypt(cryptoDto); break;
-            case "cardanGrille": cardanGrille.decrypt(cryptoDto); break;
+            case "richelieu": richelieu.decrypt(cryptoDto); break;
         }
     }
 
@@ -68,7 +68,7 @@ public class CryptoManager {
             case "doublePermutation": doublePermutation.encrypt(cryptoDto); break;
             case "hill": hill.encrypt(cryptoDto); break;
             case "playfair": playfair.encrypt(cryptoDto); break;
-            case "cardanGrille": cardanGrille.encrypt(cryptoDto); break;
+            case "richelieu": richelieu.encrypt(cryptoDto); break;
         }
     }
 

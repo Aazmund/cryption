@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import piv.cryption.models.CryptoDto;
 
 @Service
-public class CardanGrille {
+public class Richelieu {
     private static final int SIZE = 6;
     private static final int[][] KEY =
             {{0, 0, 0, 0, 0, 1},
