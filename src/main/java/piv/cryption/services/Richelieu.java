@@ -21,11 +21,11 @@ public class Richelieu {
             String keySorted = String.copyValueOf(keyArray);
             for (int j = 0; j < keySorted.length(); j++) {
                 int indexOf = keySorted.indexOf(stringsKey[i].charAt(j));
-                result.append(text.charAt(index + indexOf));
+                if (index + indexOf < text.length())
+                    result.append(text.charAt(index + indexOf));
             }
             index+=keySorted.length();
-            if (i < stringsKey.length - 1)
-                result.append(" ");
+            result.append(" ");
         }
         cryptoDto.setResult(result.toString());
     }
@@ -40,7 +40,8 @@ public class Richelieu {
             String keySorted = String.copyValueOf(keyArray);
             for (int j = 0; j < keySorted.length(); j++) {
                 int indexOf = stringsKey[i].indexOf(keySorted.charAt(j));
-                result.append(text.charAt(index + indexOf));
+                if (index + indexOf < text.length())
+                    result.append(text.charAt(index + indexOf));
             }
             index+=keySorted.length();
         }
